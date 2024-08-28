@@ -17,13 +17,12 @@ void DrawPlayerEsp()
 {
 	if (!EngineInstance)
 		return;
-	/*for (auto entity : EngineInstance->GetActors())
+	for (auto entity : EngineInstance->GetActors())
 	{
 		if (entity->GetPosition() == Vector3(0, 0, 0))
 			continue;
 		PlayerConfig config = Configs.Survivor;
-		if (entity->GetPlayerRole() == EPlayerRole::EPlayerRole__VE_Slasher)
-			config = Configs.Killer;
+	
 
 		Vector2 screenpos = Camera::WorldToScreen(EngineInstance->GetCameraCache().POV, entity->GetPosition());
 		if (screenpos == Vector2::Zero())
@@ -37,6 +36,6 @@ void DrawPlayerEsp()
 		if (distance > config.MaxDistance)
 			continue;
 		DrawText(screenpos.x, screenpos.y, name + wdistance, "Verdana", config.FontSize, config.TextColour, CentreCentre);
-	}*/
+	}
 	
 }

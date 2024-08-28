@@ -91,20 +91,20 @@ void Engine::Cache()
 	std::vector<std::shared_ptr<ActorEntity>> playerlist;
 	for (std::shared_ptr<ActorEntity> entity : actors)
 	{
+		std::string name = ResolveGName(entity->GetEntityID());
+	
+		if(name.substr(0,10) != LIT("BP_Soldier"))
+			continue;
 		entity->SetUp2();
 		if (entity->GetName() == LIT(L"Entity"))
 			continue;
 		if(entity->GetPosition() == Vector3::Zero())
 						continue;
+		//printf("Entity: %s\n", name.c_str());
 		playerlist.push_back(entity);
 	}
-	for (std::shared_ptr<ActorEntity> entity : actors)
-	{
-		std::string name = ResolveGName(entity->GetEntityID());
-		printf("Entity: %s\n", name.c_str());
-	}
 
-	//Actors = playerlist;
+	Actors = playerlist;
 }
 void Engine::UpdatePlayers()
 {

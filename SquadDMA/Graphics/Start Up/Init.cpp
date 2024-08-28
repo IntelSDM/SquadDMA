@@ -87,15 +87,15 @@ void InitialiseClasses()
 }
 
 std::shared_ptr<CheatFunction> Cache = std::make_shared<CheatFunction>(3000, [] {
-	if (!EngineInstance)
-	{
-		EngineInstance = std::make_shared<Engine>();
-		return;
-	}
-	if (!EngineInstance->GetActorSize() <= 0 || EngineInstance->GetActorSize() >= 2000)
-	{
-		EngineInstance = std::make_shared<Engine>();
-	}
+//	if (!EngineInstance)
+//	{
+//		EngineInstance = std::make_shared<Engine>();
+//		return;
+//	}
+//	if (!EngineInstance->GetActorSize() <= 0 || EngineInstance->GetActorSize() >= 10000)
+//	{
+//		EngineInstance = std::make_shared<Engine>();
+//	}
 	EngineInstance->Cache();
 	});
 std::shared_ptr<CheatFunction> UpdateViewMatrix = std::make_shared<CheatFunction>(5, [] {
