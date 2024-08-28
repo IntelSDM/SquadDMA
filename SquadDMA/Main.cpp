@@ -48,7 +48,7 @@ std::shared_ptr<CheatFunction> Cache = std::make_shared<CheatFunction>(3000, [] 
 	{
 		EngineInstance = std::make_shared<Engine>();
 	}
-	EngineInstance->Cache();
+	EngineInstance->Cache();	
 	});
 
 void CachingThread()

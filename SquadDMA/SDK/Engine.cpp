@@ -17,10 +17,10 @@ Engine::Engine()
 	printf("LocalPlayers: %p\n", LocalPlayers);
 	PlayerController = TargetProcess.Read<uint64_t>(LocalPlayers + PlayerController);
 	printf("PlayerController: %p\n", PlayerController);
-	PlayerState = TargetProcess.Read<uint64_t>(PlayerController + PlayerState);
-	printf("PlayerState: %p\n", PlayerState);
 	AcknowledgedPawn = TargetProcess.Read<uint64_t>(PlayerController + AcknowledgedPawn);
 	printf("AcknowledgedPawn: %p\n", AcknowledgedPawn);
+	PlayerState = TargetProcess.Read<uint64_t>(AcknowledgedPawn + PlayerState);
+	printf("PlayerState: %p\n", PlayerState);
 	CameraManager = TargetProcess.Read<uint64_t>(PlayerController + CameraManager);
 	printf("CameraManager: %p\n", CameraManager);
 	CameraEntry = TargetProcess.Read<CameraCacheEntry>(CameraManager + CameraCachePrivateOffset);
@@ -84,6 +84,7 @@ void Engine::Cache()
 	TargetProcess.ExecuteReadScatter(handle);
 	TargetProcess.CloseScatterHandle(handle);
 	LocalPlayerTeamID.store(templocalplayerteamid);
+	
 
 	handle = TargetProcess.CreateScatterHandle();
 	for (std::shared_ptr<ActorEntity> entity : actors)

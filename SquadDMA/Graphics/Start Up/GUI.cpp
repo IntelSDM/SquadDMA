@@ -29,7 +29,7 @@ std::wstring ScreenHeight = std::to_wstring(Configs.Overlay.Height);
 void CreateGUI()
 {
 	MenuEntity = std::make_shared<Container>();
-	auto form = std::make_shared<Form>(100, 100.0f, 300, 200, 2, 30, LIT(L"DMA Dead By Daylight"), false);
+	auto form = std::make_shared<Form>(100, 100.0f, 300, 200, 2, 30, LIT(L"Squad DMA"), false);
 	{
 		auto tabcontroller = std::make_shared<TabController>();
 		form->Push(tabcontroller);
@@ -48,7 +48,7 @@ void CreateGUI()
 			playeresptab->Push(textsize);
 		}
 		tabcontroller->Push(playeresptab);
-		auto overlaytab = std::make_shared<Tab>(LIT(L"Overlay"), 5, 55, &SelectedTab, 0, 20);
+		auto overlaytab = std::make_shared<Tab>(LIT(L"Overlay"), 5, 30, &SelectedTab, 0, 20);
 		{
 			auto overrideresolution = std::make_shared<Toggle>(100, 5, LIT(L"Override W2S Resolution"), &Configs.Overlay.OverrideResolution);
 			overlaytab->Push(overrideresolution);
@@ -80,7 +80,7 @@ void CreateGUI()
 
 		}
 		tabcontroller->Push(overlaytab);
-		auto configtab = std::make_shared<Tab>(LIT(L"Config"), 5, 80, &SelectedTab, 0, 20);
+		auto configtab = std::make_shared<Tab>(LIT(L"Config"), 5, 55, &SelectedTab, 0, 20);
 		{
 			auto saveconfig = std::make_shared<Button>(100, 5, LIT(L"Save"), []()
 				{
