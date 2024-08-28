@@ -34,18 +34,15 @@ std::string Engine::ResolveGName(const uint32_t& id)
 	uintptr_t gname = TargetProcess.GetBaseAddress(ProcessName) + GName;
 	uintptr_t namepool = TargetProcess.Read<uintptr_t>(gname + (((id >> 16) + 2) * 8));
 	if (!namepool)
-		return "";
+		return LIT("");
 	uintptr_t entry = namepool + (uint32_t)(2 * (uint16_t)id);
 	if (!entry)
-		return "";
+		return LIT("");
 
 	uint16_t nameentry = TargetProcess.Read<uint16_t>(entry);
 	uint32_t namelength = (nameentry >> 6);
 
-	if (namelength > 256)
-	{
-		namelength = 255;
-	}
+	namelength = namelength >256 ? 256 : namelength;
 
 	auto result = TargetProcess.Read(entry + 0x2, &name, namelength);
 	return std::string(name, namelength);
@@ -60,7 +57,11 @@ void Engine::Cache()
 		return;
 	}
 	MaxPacket = TargetProcess.Read<uint32_t>(PersistentLevel + MaxPacketOffset);
-
+	if (MaxPacket > 6000)
+	{
+		MaxPacket = 0;
+		return;
+	}
 	printf(LIT("Actor Array: %p\n"), OwningActor);
 	printf(LIT("Actor Array Size: %d\n"), MaxPacket);
 
