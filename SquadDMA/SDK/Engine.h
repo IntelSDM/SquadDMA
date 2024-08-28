@@ -28,6 +28,8 @@ private:
 	std::vector<std::shared_ptr<ActorEntity>> Actors;
 	std::string ResolveGName(const uint32_t& id);
 	std::map<uint32_t, std::string> GNamesMap;
+
+	std::mutex ActorMutex;
 public:
 	Engine();
 	void Cache();

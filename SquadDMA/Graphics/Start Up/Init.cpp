@@ -86,33 +86,15 @@ void InitialiseClasses()
 	
 }
 
-std::shared_ptr<CheatFunction> Cache = std::make_shared<CheatFunction>(3000, [] {
-//	if (!EngineInstance)
-//	{
-//		EngineInstance = std::make_shared<Engine>();
-//		return;
-//	}
 
-	if (EngineInstance->GetActorSize() <= 0)
-	{
-		EngineInstance = std::make_shared<Engine>();
-	}
-	EngineInstance->Cache();
-	});
-std::shared_ptr<CheatFunction> UpdateViewMatrix = std::make_shared<CheatFunction>(5, [] {
-	if (!EngineInstance)
-		return;
+
+
+void RenderFrame()
+{
 	auto handle = TargetProcess.CreateScatterHandle();
 	EngineInstance->RefreshViewMatrix(handle);
 	TargetProcess.ExecuteReadScatter(handle);
 	TargetProcess.CloseScatterHandle(handle);
-
-	});
-
-void RenderFrame()
-{
-	Cache->Execute();
-	UpdateViewMatrix->Execute();
 	UpdatePlayers->Execute();
 	RenderTarget->BeginDraw();
 	RenderTarget->Clear(Colour(0, 0, 0, 255)); // clear over the last buffer

@@ -16,8 +16,6 @@ void main()
 	
 	TargetProcess.FixCr3();
 
-	uint64_t base = TargetProcess.GetBaseAddress(ProcessName);
-	uint64_t size = TargetProcess.GetBaseSize(ProcessName);
 	EngineInstance = std::make_shared<Engine>();
 	EngineInstance->Cache();
 
@@ -39,7 +37,28 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 
 	return DefWindowProc(hWnd, message, wParam, lParam);
 }
+std::shared_ptr<CheatFunction> Cache = std::make_shared<CheatFunction>(3000, [] {
+	//	if (!EngineInstance)
+	//	{
+	//		EngineInstance = std::make_shared<Engine>();
+	//		return;
+	//	}
 
+	if (EngineInstance->GetActorSize() <= 0)
+	{
+		EngineInstance = std::make_shared<Engine>();
+	}
+	EngineInstance->Cache();
+	});
+
+void CachingThread()
+{
+	while (true)
+	{
+		Cache->Execute();
+		std::this_thread::sleep_for(std::chrono::milliseconds(100));
+	}
+}
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 	HWND hWnd;
@@ -79,6 +98,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	MSG msg;
 	SetProcessDPIAware();
 	SetInput();
+	std::thread cache(CachingThread);
+	cache.detach();
 	while (TRUE)
 	{
 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))

@@ -107,19 +107,29 @@ void Engine::Cache()
 	}
 
 
-
+	ActorMutex.lock();
 	Actors = playerlist;
+	ActorMutex.unlock();
 }
 void Engine::UpdatePlayers()
 {
+
 	auto handle = TargetProcess.CreateScatterHandle();
-	for (std::shared_ptr<ActorEntity> entity : Actors)
+	std::vector<std::shared_ptr<ActorEntity>> tempactors;
+	ActorMutex.lock();
+	tempactors = Actors;
+	ActorMutex.unlock();
+
+	for (std::shared_ptr<ActorEntity> entity : tempactors)
 	{
 		entity->UpdatePosition(handle);
 		entity->UpdateHealth(handle);
 	}
 	TargetProcess.ExecuteReadScatter(handle);
 	TargetProcess.CloseScatterHandle(handle);
+	ActorMutex.lock();
+	Actors = tempactors;
+	ActorMutex.unlock();
 }
 void Engine::RefreshViewMatrix(VMMDLL_SCATTER_HANDLE handle)
 {
@@ -133,7 +143,11 @@ CameraCacheEntry Engine::GetCameraCache()
 
 std::vector<std::shared_ptr<ActorEntity>> Engine::GetActors()
 {
-	return Actors;
+	std::vector<std::shared_ptr<ActorEntity>> tempactors;
+	ActorMutex.lock();
+	tempactors = Actors;
+	ActorMutex.unlock();
+	return tempactors;
 }
 
 uint32_t Engine::GetActorSize()
