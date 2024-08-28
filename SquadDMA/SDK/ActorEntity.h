@@ -13,7 +13,7 @@ private:
 	uint32_t TeamID = 0x400; // ASQPlayerState -> TeamID
 	uint32_t HealthOffset = 0x1df8; // ASQSoldier -> Health
 	float Health = 0;
-	std::wstring Name = LIT(L"Entity");
+	std::wstring Name = LIT(L"Enemy");
 	UEVector UEPosition;
 	Vector3 Position;
 public:

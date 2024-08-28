@@ -36,32 +36,18 @@ void CreateGUI()
 
 		auto playeresptab = std::make_shared<Tab>(LIT(L"Player ESP"), 5, 5, &SelectedTab, 0, 20);
 		{
-			auto name = std::make_shared<Toggle>(100, 5, LIT(L"Name"), &Configs.Survivor.Name);
+			auto name = std::make_shared<Toggle>(100, 5, LIT(L"Name"), &Configs.Player.Name);
 			playeresptab->Push(name);
-			auto textcolour = std::make_shared<ColourPicker>(160, 6, &Configs.Survivor.TextColour);
+			auto textcolour = std::make_shared<ColourPicker>(160, 6, &Configs.Player.TextColour);
 			playeresptab->Push(textcolour);
-			auto distance = std::make_shared<Toggle>(100, 25, LIT(L"Distance"), &Configs.Survivor.Distance);
+			auto distance = std::make_shared<Toggle>(100, 25, LIT(L"Distance"), &Configs.Player.Distance);
 			playeresptab->Push(distance);
-			auto maxdistance = std::make_shared<Slider<int>>(100, 45, 150, LIT(L"Max Distance"), LIT(L"m"), 0, 1000, &Configs.Survivor.MaxDistance);
+			auto maxdistance = std::make_shared<Slider<int>>(100, 45, 150, LIT(L"Max Distance"), LIT(L"m"), 0, 1000, &Configs.Player.MaxDistance);
 			playeresptab->Push(maxdistance);
-			auto textsize = std::make_shared<Slider<int>>(100, 70, 150, LIT(L"Text Size"), LIT(L"px"), 4, 16, &Configs.Survivor.FontSize);
+			auto textsize = std::make_shared<Slider<int>>(100, 70, 150, LIT(L"Text Size"), LIT(L"px"), 4, 16, &Configs.Player.FontSize);
 			playeresptab->Push(textsize);
 		}
 		tabcontroller->Push(playeresptab);
-		auto killeresptab = std::make_shared<Tab>(LIT(L"Killer ESP"), 5, 30, &SelectedTab, 0, 20);
-		{
-			auto name = std::make_shared<Toggle>(100, 5, LIT(L"Name"), &Configs.Killer.Name);
-			killeresptab->Push(name);
-			auto textcolour = std::make_shared<ColourPicker>(160, 6, &Configs.Killer.TextColour);
-			killeresptab->Push(textcolour);
-			auto distance = std::make_shared<Toggle>(100, 25, LIT(L"Distance"), &Configs.Killer.Distance);
-			killeresptab->Push(distance);
-			auto maxdistance = std::make_shared<Slider<int>>(100, 45, 150, LIT(L"Max Distance"), LIT(L"m"), 0, 1000, &Configs.Killer.MaxDistance);
-			killeresptab->Push(maxdistance);
-			auto textsize = std::make_shared<Slider<int>>(100, 70, 150, LIT(L"Text Size"), LIT(L"px"), 4, 16, &Configs.Killer.FontSize);
-			killeresptab->Push(textsize);
-		}
-		tabcontroller->Push(killeresptab);
 		auto overlaytab = std::make_shared<Tab>(LIT(L"Overlay"), 5, 55, &SelectedTab, 0, 20);
 		{
 			auto overrideresolution = std::make_shared<Toggle>(100, 5, LIT(L"Override W2S Resolution"), &Configs.Overlay.OverrideResolution);

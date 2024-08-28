@@ -21,9 +21,6 @@ void DrawPlayerEsp()
 	{
 		if (entity->GetPosition() == Vector3(0, 0, 0))
 			continue;
-		PlayerConfig config = Configs.Survivor;
-	
-
 		Vector2 screenpos = Camera::WorldToScreen(EngineInstance->GetCameraCache().POV, entity->GetPosition());
 		if (screenpos == Vector2::Zero())
 			continue;
@@ -35,12 +32,12 @@ void DrawPlayerEsp()
 			continue;
 		if(entity->GetHealth() <= 0)
 			continue;
-		std::wstring wdistance = config.Distance ? L"[" + std::to_wstring((int)distance) + L"m]" : L"";
-		std::wstring whealth = config.Health ? L"[" + std::to_wstring((int)entity->GetHealth()) + L"❤]" : L"";
-		std::wstring name = config.Name ? entity->GetName() : L"";
-		if (distance > config.MaxDistance)
+		std::wstring wdistance = Configs.Player.Distance ? L"[" + std::to_wstring((int)distance) + L"m]" : L"";
+		std::wstring whealth = Configs.Player.Health ? L"[" + std::to_wstring((int)entity->GetHealth()) + L"❤]" : L"";
+		std::wstring name = Configs.Player.Name ? entity->GetName() : L"";
+		if (distance > Configs.Player.MaxDistance)
 			continue;
-		DrawText(screenpos.x, screenpos.y, name + wdistance + whealth, LIT("Verdana"), config.FontSize, config.TextColour, CentreCentre);
+		DrawText(screenpos.x, screenpos.y, name + wdistance + whealth, LIT("Verdana"), Configs.Player.FontSize, Configs.Player.TextColour, CentreCentre);
 	}
 	
 }

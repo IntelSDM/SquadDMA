@@ -5,22 +5,19 @@
 class ConfigInstances
 {
 public:
-	PlayerConfig Survivor = PlayerConfig(LIT("Survivor"));
-	PlayerConfig Killer = PlayerConfig(LIT("Killer"));
+	PlayerConfig Player = PlayerConfig(LIT("Player"));
 	OverlayConfig Overlay = OverlayConfig(LIT("Overlay"));
 	json ToJson()
 	{
 		json jsoned;
-		jsoned.merge_patch(Survivor.ToJson());
+		jsoned.merge_patch(Player.ToJson());
 		jsoned.merge_patch(Overlay.ToJson());
-		jsoned.merge_patch(Killer.ToJson());
 		return jsoned;
 	}
 
 	void FromJson(json jsoned)
 	{
-		Survivor.FromJson(jsoned);
+		Player.FromJson(jsoned);
 		Overlay.FromJson(jsoned);
-		Killer.FromJson(jsoned);
 	}
 };

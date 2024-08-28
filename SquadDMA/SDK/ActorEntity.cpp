@@ -32,9 +32,6 @@ void ActorEntity::SetUp2()
 		return;
 	if (!RootComponent)
 		return;
-	
-		// by this point we should only have our surviors and killers
-		Name = L"Player";
 		Position = Vector3(UEPosition.X, UEPosition.Y, UEPosition.Z);
 
 }

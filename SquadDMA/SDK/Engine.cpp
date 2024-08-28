@@ -102,7 +102,7 @@ void Engine::Cache()
 		entity->SetUp2();
 		if(entity->GetPosition() == Vector3::Zero())
 						continue;
-		printf("Entity: %s\n", name.c_str());
+		//printf("Entity: %s\n", name.c_str());
 		playerlist.push_back(entity);
 	}
 
