@@ -11,6 +11,7 @@ public:
 	}
     bool Name = true;
     bool Distance = true;
+    bool Health = true;
 	int MaxDistance = 1000;
 	D2D1::ColorF TextColour = Colour(255, 255, 255);
 	int FontSize = 11;
@@ -39,6 +40,7 @@ public:
         j[ConfigName][LIT("Name")] = Name;
         j[ConfigName][LIT("FontSize")] = FontSize;
         j[ConfigName][LIT("MaxDistance")] = MaxDistance;
+        j[ConfigName][LIT("Distance")] = Distance;
         ToJsonColour(&j, LIT("TextColour"), &TextColour);
 
         return j;
@@ -55,6 +57,8 @@ public:
             FontSize = j[ConfigName][LIT("FontSize")];
         if (j[ConfigName].contains(LIT("MaxDistance")))
             MaxDistance = j[ConfigName][LIT("MaxDistance")];
+        if (j[ConfigName].contains(LIT("Health")))
+            Health = j[ConfigName][LIT("Health")];
         FromJsonColour(j, LIT("TextColour"), &TextColour);
     }
 };

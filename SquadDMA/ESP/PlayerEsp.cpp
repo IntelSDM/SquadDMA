@@ -1,4 +1,4 @@
-#include "Pch.h"
+﻿#include "Pch.h"
 #include "Drawing.h"
 #include "Globals.h"
 #include "Camera.h"
@@ -31,11 +31,16 @@ void DrawPlayerEsp()
 		float distance = (Vector3::Distance(campos, entity->GetPosition()) / 39.62f) - 6;
 		if (distance < 0)
 			continue;
+		if (entity->GetTeamID() == LocalPlayerTeamID.load())
+			continue;
+		if(entity->GetHealth() <= 0)
+			continue;
 		std::wstring wdistance = config.Distance ? L"[" + std::to_wstring((int)distance) + L"m]" : L"";
+		std::wstring whealth = config.Health ? L"[" + std::to_wstring((int)entity->GetHealth()) + L"❤]" : L"";
 		std::wstring name = config.Name ? entity->GetName() : L"";
 		if (distance > config.MaxDistance)
 			continue;
-		DrawText(screenpos.x, screenpos.y, name + wdistance, "Verdana", config.FontSize, config.TextColour, CentreCentre);
+		DrawText(screenpos.x, screenpos.y, name + wdistance + whealth, LIT("Verdana"), config.FontSize, config.TextColour, CentreCentre);
 	}
 	
 }

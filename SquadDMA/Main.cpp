@@ -7,11 +7,11 @@
 #include "Engine.h"
 std::shared_ptr<Engine> EngineInstance;
 std::string ProcessName;
-
+std::atomic<int> LocalPlayerTeamID;
 void main()
 {
 	bool gamefound = true;
-	ProcessName = "SquadGame.exe";
+	ProcessName = LIT("SquadGame.exe");
 	TargetProcess.Init(ProcessName);
 	
 	TargetProcess.FixCr3();

@@ -18,9 +18,11 @@ private:
 	uint64_t LocalPlayers = 0x38; // GameInstance -> LocalPlayers
 	uint64_t PlayerController = 0x30; // Player -> PlayerController
 	uint64_t AcknowledgedPawn = 0x2a8;
+	uint64_t PlayerState = 0x248; // Pawn -> PlayerState
 	uint64_t CameraManager = 0x2c0; // PlayerController -> PlayerCameraManager
 	uint64_t CameraCachePrivate = 0x0; // PlayerCameraManager -> CameraCachePrivate
 	uint64_t CameraCachePrivateOffset = 0x1af0; // PlayerCameraManager -> CameraCachePrivate
+	uint64_t TeamID = 0x400;
 	CameraCacheEntry CameraEntry; // ScriptStruct Engine.CameraCacheEntry
 	MinimalViewInfo CameraViewInfo; // ScriptStruct Engine.MinimalViewInfo
 	std::vector<std::shared_ptr<ActorEntity>> Actors;

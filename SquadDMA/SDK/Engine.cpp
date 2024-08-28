@@ -17,6 +17,8 @@ Engine::Engine()
 	printf("LocalPlayers: %p\n", LocalPlayers);
 	PlayerController = TargetProcess.Read<uint64_t>(LocalPlayers + PlayerController);
 	printf("PlayerController: %p\n", PlayerController);
+	PlayerState = TargetProcess.Read<uint64_t>(PlayerController + PlayerState);
+	printf("PlayerState: %p\n", PlayerState);
 	AcknowledgedPawn = TargetProcess.Read<uint64_t>(PlayerController + AcknowledgedPawn);
 	printf("AcknowledgedPawn: %p\n", AcknowledgedPawn);
 	CameraManager = TargetProcess.Read<uint64_t>(PlayerController + CameraManager);
@@ -65,6 +67,7 @@ void Engine::Cache()
 	{
 		entitylist[i] = object_raw_ptr[i];
 	}
+	int templocalplayerteamid = 0;
 	std::list<std::shared_ptr<ActorEntity>> actors;
 	auto handle = TargetProcess.CreateScatterHandle();
 	for (uint64_t address : entitylist)
@@ -77,9 +80,10 @@ void Engine::Cache()
 			actors.push_back(entity);
 		
 	}
+	TargetProcess.AddScatterReadRequest(handle, PlayerState + TeamID, reinterpret_cast<void*>(&templocalplayerteamid), sizeof(int));
 	TargetProcess.ExecuteReadScatter(handle);
 	TargetProcess.CloseScatterHandle(handle);
-
+	LocalPlayerTeamID.store(templocalplayerteamid);
 
 	handle = TargetProcess.CreateScatterHandle();
 	for (std::shared_ptr<ActorEntity> entity : actors)
@@ -96,13 +100,13 @@ void Engine::Cache()
 		if(name.substr(0,10) != LIT("BP_Soldier"))
 			continue;
 		entity->SetUp2();
-		if (entity->GetName() == LIT(L"Entity"))
-			continue;
 		if(entity->GetPosition() == Vector3::Zero())
 						continue;
-		//printf("Entity: %s\n", name.c_str());
+		printf("Entity: %s\n", name.c_str());
 		playerlist.push_back(entity);
 	}
+
+
 
 	Actors = playerlist;
 }
@@ -112,6 +116,7 @@ void Engine::UpdatePlayers()
 	for (std::shared_ptr<ActorEntity> entity : Actors)
 	{
 		entity->UpdatePosition(handle);
+		entity->UpdateHealth(handle);
 	}
 	TargetProcess.ExecuteReadScatter(handle);
 	TargetProcess.CloseScatterHandle(handle);

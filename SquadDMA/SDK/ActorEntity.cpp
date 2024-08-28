@@ -20,6 +20,9 @@ void ActorEntity::SetUp1(VMMDLL_SCATTER_HANDLE handle)
 		return;
 	if (!RootComponent)
 		return;
+	TargetProcess.AddScatterReadRequest(handle, PlayerState + TeamID, reinterpret_cast<void*>(&TeamID), sizeof(int));
+	TargetProcess.AddScatterReadRequest(handle, Class + HealthOffset, reinterpret_cast<void*>(&Health), sizeof(float));
+	TargetProcess.AddScatterReadRequest(handle, RootComponent + RelativeLocation, reinterpret_cast<void*>(&UEPosition), sizeof(UEVector));
 }
 
 void ActorEntity::SetUp2()
@@ -32,8 +35,6 @@ void ActorEntity::SetUp2()
 	
 		// by this point we should only have our surviors and killers
 		Name = L"Player";
-
-		UEPosition = TargetProcess.Read<UEVector>(RootComponent + RelativeLocation);
 		Position = Vector3(UEPosition.X, UEPosition.Y, UEPosition.Z);
 
 }
@@ -66,8 +67,28 @@ void ActorEntity::UpdatePosition(VMMDLL_SCATTER_HANDLE handle)
 		return;
 	TargetProcess.AddScatterReadRequest(handle, RootComponent + RelativeLocation, reinterpret_cast<void*>(&UEPosition), sizeof(UEVector));
 }
+void ActorEntity::UpdateHealth(VMMDLL_SCATTER_HANDLE handle)
+{
+	if (!Class)
+		return;
+	if (!RootComponent)
+		return;
+	if (!PlayerState)
+		return;
+	TargetProcess.AddScatterReadRequest(handle, Class + HealthOffset, reinterpret_cast<void*>(&Health), sizeof(float));
+}
 
 uint32_t ActorEntity::GetEntityID()
 {
 	return EntityID;
+}
+
+int ActorEntity::GetTeamID()
+{
+	return TeamID;
+}
+
+float ActorEntity::GetHealth()
+{
+	return Health;
 }
