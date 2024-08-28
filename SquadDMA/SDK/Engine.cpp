@@ -6,25 +6,25 @@
 Engine::Engine()
 {
 	GWorld = TargetProcess.Read<uint64_t>(TargetProcess.GetBaseAddress(ProcessName) + GWorld);
-	printf("GWorld: %p\n", GWorld);
+	printf(LIT("GWorld: %p\n"), GWorld);
 	PersistentLevel = TargetProcess.Read<uint64_t>(GWorld + PersistentLevel);
-	printf("PersistentLevel: %p\n", PersistentLevel);
+	printf(LIT("PersistentLevel: %p\n"), PersistentLevel);
 	OwningGameInstance = TargetProcess.Read<uint64_t>(GWorld + OwningGameInstance);
-	printf("OwningGameInstance: %p\n", OwningGameInstance);
+	printf(LIT("OwningGameInstance: %p\n"), OwningGameInstance);
 	LocalPlayers = TargetProcess.Read<uint64_t>(OwningGameInstance + LocalPlayers);
-	printf("LocalPlayers: %p\n", LocalPlayers);
+	printf(LIT("LocalPlayers: %p\n"), LocalPlayers);
 	LocalPlayers = TargetProcess.Read<uint64_t>(LocalPlayers);
-	printf("LocalPlayers: %p\n", LocalPlayers);
+	printf(LIT("LocalPlayers: %p\n"), LocalPlayers);
 	PlayerController = TargetProcess.Read<uint64_t>(LocalPlayers + PlayerController);
-	printf("PlayerController: %p\n", PlayerController);
+	printf(LIT("PlayerController: %p\n"), PlayerController);
 	AcknowledgedPawn = TargetProcess.Read<uint64_t>(PlayerController + AcknowledgedPawn);
-	printf("AcknowledgedPawn: %p\n", AcknowledgedPawn);
+	printf(LIT("AcknowledgedPawn: %p\n"), AcknowledgedPawn);
 	PlayerState = TargetProcess.Read<uint64_t>(AcknowledgedPawn + PlayerState);
-	printf("PlayerState: %p\n", PlayerState);
+	printf(LIT("PlayerState: %p\n"), PlayerState);
 	CameraManager = TargetProcess.Read<uint64_t>(PlayerController + CameraManager);
-	printf("CameraManager: %p\n", CameraManager);
+	printf(LIT("CameraManager: %p\n"), CameraManager);
 	CameraEntry = TargetProcess.Read<CameraCacheEntry>(CameraManager + CameraCachePrivateOffset);
-	printf("CameraCacheEntry: %p\n", CameraEntry);
+	printf(LIT("CameraCacheEntry: %p\n"), CameraEntry);
 
 }
 
@@ -61,8 +61,8 @@ void Engine::Cache()
 	}
 	MaxPacket = TargetProcess.Read<uint32_t>(PersistentLevel + MaxPacketOffset);
 
-	printf("Actor Array: %p\n", OwningActor);
-	printf("Actor Array Size: %d\n", MaxPacket);
+	printf(LIT("Actor Array: %p\n"), OwningActor);
+	printf(LIT("Actor Array Size: %d\n"), MaxPacket);
 
 	std::vector<uint64_t> entitylist;
 	entitylist.resize(MaxPacket);
