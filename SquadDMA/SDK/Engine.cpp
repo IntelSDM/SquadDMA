@@ -54,6 +54,11 @@ void Engine::Cache()
 {
 
 	OwningActor = TargetProcess.Read<uint64_t>(PersistentLevel + OwningActorOffset);
+	if(!OwningActor)
+	{
+		MaxPacket = 0;
+		return;
+	}
 	MaxPacket = TargetProcess.Read<uint32_t>(PersistentLevel + MaxPacketOffset);
 
 	printf("Actor Array: %p\n", OwningActor);
