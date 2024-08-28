@@ -26,7 +26,28 @@ Engine::Engine()
 
 }
 
+std::string Engine::ResolveGName(const uint32_t& id)
+{
+	char name[256];
+	uintptr_t gname = TargetProcess.GetBaseAddress(ProcessName) + GName;
+	uintptr_t namepool = TargetProcess.Read<uintptr_t>(gname + (((id >> 16) + 2) * 8));
+	if (!namepool)
+		return "";
+	uintptr_t entry = namepool + (uint32_t)(2 * (uint16_t)id);
+	if (!entry)
+		return "";
 
+	uint16_t nameentry = TargetProcess.Read<uint16_t>(entry);
+	uint32_t namelength = (nameentry >> 6);
+
+	if (namelength > 256)
+	{
+		namelength = 255;
+	}
+
+	auto result = TargetProcess.Read(entry + 0x2, &name, namelength);
+	return std::string(name, namelength);
+}
 void Engine::Cache()
 {
 
@@ -77,7 +98,13 @@ void Engine::Cache()
 						continue;
 		playerlist.push_back(entity);
 	}
-	Actors = playerlist;
+	for (std::shared_ptr<ActorEntity> entity : actors)
+	{
+		std::string name = ResolveGName(entity->GetEntityID());
+		printf("Entity: %s\n", name.c_str());
+	}
+
+	//Actors = playerlist;
 }
 void Engine::UpdatePlayers()
 {

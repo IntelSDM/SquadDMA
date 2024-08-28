@@ -11,21 +11,9 @@ std::string ProcessName;
 void main()
 {
 	bool gamefound = true;
-	ProcessName = "DeadByDaylight-Win64-Shipping.exe";
-	if (TargetProcess.Init("DeadByDaylight-Win64-Shipping.exe"))
-	{
-		ProcessName = "DeadByDaylight-Win64-Shipping.exe";
-	}
-	else if (TargetProcess.Init("DeadByDaylight-EGS-Shipping.exe"))
-	{
-		ProcessName = "DeadByDaylight-EGS-Shipping.exe";
-
-	}
-	else
-	{
-		printf("Failed to find game\n");
-		return;
-	}
+	ProcessName = "SquadGame.exe";
+	TargetProcess.Init(ProcessName);
+	
 	TargetProcess.FixCr3();
 
 	uint64_t base = TargetProcess.GetBaseAddress(ProcessName);

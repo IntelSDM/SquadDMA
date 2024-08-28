@@ -24,6 +24,8 @@ private:
 	CameraCacheEntry CameraEntry; // ScriptStruct Engine.CameraCacheEntry
 	MinimalViewInfo CameraViewInfo; // ScriptStruct Engine.MinimalViewInfo
 	std::vector<std::shared_ptr<ActorEntity>> Actors;
+	std::string ResolveGName(const uint32_t& id);
+	std::map<uint32_t, std::string> GNamesMap;
 public:
 	Engine();
 	void Cache();
