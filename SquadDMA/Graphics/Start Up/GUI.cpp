@@ -42,9 +42,11 @@ void CreateGUI()
 			playeresptab->Push(textcolour);
 			auto distance = std::make_shared<Toggle>(100, 25, LIT(L"Distance"), &Configs.Player.Distance);
 			playeresptab->Push(distance);
-			auto maxdistance = std::make_shared<Slider<int>>(100, 45, 150, LIT(L"Max Distance"), LIT(L"m"), 0, 1000, &Configs.Player.MaxDistance);
+			auto health = std::make_shared<Toggle>(100, 45, LIT(L"Health"), &Configs.Player.Health);
+			playeresptab->Push(health);
+			auto maxdistance = std::make_shared<Slider<int>>(100, 70, 150, LIT(L"Max Distance"), LIT(L"m"), 0, 2000, &Configs.Player.MaxDistance);
 			playeresptab->Push(maxdistance);
-			auto textsize = std::make_shared<Slider<int>>(100, 70, 150, LIT(L"Text Size"), LIT(L"px"), 4, 16, &Configs.Player.FontSize);
+			auto textsize = std::make_shared<Slider<int>>(100, 95, 150, LIT(L"Text Size"), LIT(L"px"), 4, 16, &Configs.Player.FontSize);
 			playeresptab->Push(textsize);
 		}
 		tabcontroller->Push(playeresptab);
