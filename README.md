@@ -17,7 +17,7 @@ Player ESP For Squad
 ## Instructions
 * [Installation Guide](./Instructions.md)
 <br>
-
+To Update: Use [Dumper-7](https://github.com/Encryqed/Dumper-7) it will get you all the classes, just look for them in the headerfile and search. It will also dump engine offsets such as Gworld and Gname
 ## Features
 * Player ESP
   * Name
